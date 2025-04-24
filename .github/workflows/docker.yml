@@ -12,6 +12,8 @@ jobs:
       container:
         # 0.9.11    4.32 GB  总共72G使用了57G，剩余15G
         image: carlasim/carla:0.9.11
+      - name: Set up Git repository
+        uses: actions/checkout@v3
         # 后面步骤就会在容器里执行
       # 运行容器
       # docker run --privileged --gpus all --net=host -v /tmp/.X11-unix:/tmp/.X11-unix:rw carlasim/carla:0.9.11 /bin/bash ./CarlaUE4.sh -RenderOffScreen
