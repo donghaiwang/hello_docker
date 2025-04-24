@@ -6,35 +6,36 @@ name: Run Docker Image
 on: [push]
 jobs:
     container:
-        name: Compile site assets
-        runs-on: ubuntu-latest
-        # https://hub.docker.com/r/carlasim/carla/tags
-        container:
-          # 0.9.11    4.32 GB  总共72G使用了57G，剩余15G
-          image: carlasim/carla:0.9.11
-          # 后面步骤就会在容器里执行
+      name: Compile site assets
+      runs-on: ubuntu-latest
+      # https://hub.docker.com/r/carlasim/carla/tags
+      container:
+        # 0.9.11    4.32 GB  总共72G使用了57G，剩余15G
+        image: carlasim/carla:0.9.11
+        # 后面步骤就会在容器里执行
+
     test:
-        name: Test carla
-        runs-on: ubuntu-latest
-        steps:
-          - name: Free Disk Space (Ubuntu)
-            uses: jlumbroso/free-disk-space@main
-            with:
-              # this might remove tools that are actually needed,
-              # when set to "true" but frees about 6 GB
-              tool-cache: true
-          - name: Set up Git repository
-            uses: actions/checkout@v3
-          # 任务名称：设置Python环境
-          - name: Set up Python
-            # This is the version of the action for setting up Python, not the Python version.
-            uses: actions/setup-python@v5
-            with:
-              python-version: '3.7' # 指定python版本
-              # Optional - x64 or x86 architecture, defaults to x64
-              architecture: 'x64'
-          - name: Install Python dependencies
-            run: python -m pip install --upgrade pip carla==0.9.11
-          - name: Tested in python script
-            working-directory: ./src
-            run: python test_connection.py  # 执行
+      name: Test carla
+      runs-on: ubuntu-latest
+      steps:
+        - name: Free Disk Space (Ubuntu)
+          uses: jlumbroso/free-disk-space@main
+          with:
+            # this might remove tools that are actually needed,
+            # when set to "true" but frees about 6 GB
+            tool-cache: true
+        - name: Set up Git repository
+          uses: actions/checkout@v3
+        # 任务名称：设置Python环境
+        - name: Set up Python
+          # This is the version of the action for setting up Python, not the Python version.
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.7' # 指定python版本
+            # Optional - x64 or x86 architecture, defaults to x64
+            architecture: 'x64'
+        - name: Install Python dependencies
+          run: python -m pip install --upgrade pip carla==0.9.11
+        - name: Tested in python script
+          working-directory: ./src
+          run: python test_connection.py  # 执行
